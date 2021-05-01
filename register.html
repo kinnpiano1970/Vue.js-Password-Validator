@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                /*background-color: black;*/
+                /*background: -webkit-linear-gradient(360deg,#949494 10%,#efefef 360%); */
+                background: linear-gradient(to right, #36486b, #667292);
+                /*background-size: cover;*/
+                /*background-repeat: no-repeat;*/
+                background-image: url("img/main-bg-image.jpg");
+
+                background-size: cover;
+
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            ensureAuthenticated, /* Add padding to containers */
+            .container {
+                width: 40%;
+                padding: 16px;
+                margin: 0 auto 10px;
+                background-image: linear-gradient(to left, #fdfbfb, #ebedee);
+                border-radius: 10px;
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.12), 0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12), 0 16px 16px rgba(0, 0, 0, 0.12);
+
+            }
+
+            /* Full-width input fields */
+            input[type=text],
+            input[type=password] {
+                width: 100%;
+                padding: 15px;
+                margin: 5px 0 22px;
+                display: inline-block;
+                border: none;
+                font-size: 1rem;
+                background: linear-gradient(to right, #cfd9df, #e2ebf0);
+
+                -moz-box-shadow: inset 0 0 5px #bdc2c7;
+                -webkit-box-shadow: inset 0 0 5px #bdc2c7;
+                box-shadow: inset 0 0 5px #bdc2c7;
+
+            }
+
+            input[type=text]:focus,
+            input[type=password]:focus {
+                /*background-color: #ddd;*/
+                color: #ffef96;
+                outline: none;
+                background-image: linear-gradient(to right, #09203f, #537895);
+            }
+
+            input::-webkit-input-placeholder {
+                color: #999;
+            }
+
+            input:focus::-webkit-input-placeholder {
+                color: #ffef96;
+            }
+
+            /* Firefox < 19 */
+            input:-moz-placeholder {
+                color: #999;
+            }
+
+            input:focus:-moz-placeholder {
+                color: #ffef96;
+            }
+
+            /* Firefox > 19 */
+            input::-moz-placeholder {
+                color: #999;
+            }
+
+            input:focus::-moz-placeholder {
+                color: #ffef96;
+            }
+
+            /* Internet Explorer 10 */
+            input:-ms-input-placeholder {
+                color: #999;
+            }
+
+            input:focus:-ms-input-placeholder {
+                color: #ffef96;
+            }
+
+            /* Overwrite default styles of hr */
+            hr {
+                border: 1px solid #f1f1f1;
+                margin-bottom: 25px;
+            }
+
+            /* Set a style for the submit button */
+            .registerbtn {
+                background-color: #618685;
+                color: white;
+                padding: 16px 20px;
+                margin: 8px 0;
+                border: none;
+                cursor: pointer;
+                width: 100%;
+                opacity: 0.9;
+                font-size: 1.3rem;
+            }
+
+            .registerbtn:hover {
+                opacity: 1;
+            }
+
+            /* Add a blue text color to links */
+            a {
+                color: dodgerblue;
+            }
+
+            /* Set a grey background color and center the text of the "sign in" section */
+            .signin {
+                background-color: #f1f1f1;
+                text-align: center;
+            }
+
+            .shadow {
+                -moz-box-shadow: inset 0 0 10px #000000;
+                -webkit-box-shadow: inset 0 0 10px #000000;
+                box-shadow: inset 0 0 10px #000000;
+            }
+
+            .validate {
+
+                padding: 0;
+                list-style-type: none;
+
+
+            }
+
+            .validate li {
+
+                margin-bottom: 3px;
+                padding: 3px 5px;
+
+            }
+
+            .invalid-bgcolor {
+
+                background-color: pink;
+
+
+            }
+
+            .valid-bgcolor {
+
+                background-color: lightgreen;
+
+
+            }
+
+            .slide-fade-enter-active {
+                transition: all 0.8s ease;
+            }
+
+            .slide-fade-leave-active {
+                transition: all 0.8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+            }
+
+            .slide-fade-enter,
+            .slide-fade-leave-to/* .slide-fade-leave-active below version 2.1.8 */
+
+            {
+                transform: translateX(500px);
+                opacity: 0;
+            }
+
+            .disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+
+            @media screen and(max-width: 960px) {
+
+                .container {
+
+                    width: 75%;
+                }
+
+
+            }
+
+            @media screen and(max-width: 600px) {
+
+                .container {
+
+                    width: 95%;
+                }
+
+
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <form id="app" action="/register" method="post">
+            <div class="container">
+                <h1>Register</h1>
+                <p>Please fill in this form to create an account.</p>
+                <hr>
+
+                <label for="user">
+                    <b>Username</b>
+                </label>
+                <input type="text" placeholder="Enter Username" name="username" id="user" required>
+
+                <label for="psw">
+                    <b>Password</b>
+                </label>
+                <input v-model="password" v-on:keyup="keyPress" v-bind:type="inputType" placeholder="Enter Password" name="password" id="psw" required>
+
+                <label for="password-repeat">
+                    <b>Repeat Password</b>
+                </label>
+                <input v-model="passRepeat" v-on:keyup="keyPress" v-bind:type="inputType" placeholder="Repeat Password" name="password-repeat" id="psw-repeat" required>
+                <label for="showpassword">Show Password</label>
+                <input v-on:click="isChecked" type="checkbox" id="showpassword" name="vehicle1" value="Bike">
+
+
+                <transition name="slide-fade">
+                    <ul class="validate">
+                        <li v-if="!validators.hasEight" class="">
+                            <img src="x-mark.png" alt="red-x-mark" width="15" height="15">
+                            Must
+                                        have at least 8 characters</li>
+                        <li v-if="validators.hasEight" class=""><img src="check-mark.png" alt="red-x-mark" width="15" height="15">
+                            Has
+                                        more than 8 characters</li>
+
+                        <li v-if="!validators.hasMatch" class=""><img src="x-mark.png" alt="red-x-mark" width="15" height="15">
+                            Must
+                                        match</li>
+                        <li v-if="validators.hasMatch" class=""><img src="check-mark.png" alt="red-x-mark" width="15" height="15">
+                            Password matches</li>
+
+                        <li v-if="!validators.hasUpper" class=""><img src="x-mark.png" alt="red-x-mark" width="15" height="15">
+                            Must
+                                        have at one UPPERCASE</li>
+                        <li v-if="validators.hasUpper" class=""><img src="check-mark.png" alt="red-x-mark" width="15" height="15">
+                            Has
+                                        at least one UPPERCASE</li>
+
+                        <li v-if="!validators.hasNumber" class=""><img src="x-mark.png" alt="red-x-mark" width="15" height="15">
+                            Must
+                                        have at least one number</li>
+                        <li v-if="validators.hasNumber" class=""><img src="check-mark.png" alt="red-x-mark" width="15" height="15">
+                            Has at least one number</li>
+
+                        <li v-if="!validators.hasNoSpace" class=""><img src="x-mark.png" alt="red-x-mark" width="15" height="15">
+                            Must
+                                        contain NO SPACES</li>
+                        <li v-if="validators.hasNoSpace" class=""><img src="check-mark.png" alt="red-x-mark" width="15" height="15">
+                            Has NO SPACES</li>
+
+                        <li v-if="!validators.hasSpecChar" class=""><img src="x-mark.png" alt="red-x-mark" width="15" height="15">
+                            Must have at least one SPECIAL CHARACTER</li>
+                        <li v-if="validators.hasSpecChar" class=""><img src="check-mark.png" alt="red-x-mark" width="15" height="15">
+                            Has at least one SPECIAL CHARACTER</li>
+
+
+                    </ul>
+                </transition>
+                <hr>
+                <p>By creating an account you agree to our
+                    <a href="#">Terms & Privacy</a>.</p>
+
+                <button v-bind:disabled="!isPasswordValid" v-bind:class="{ disabled: !isPasswordValid}" type="submit" class="registerbtn">Register</button>
+            </div>
+
+            <div class="container signin">
+                <p>Already have an account?
+                    <a href="/login">Sign in</a>.</p>
+            </div>
+        </form>
+        <script src="vue.js" type="text/javascript"></script>
+        <script>
+            const app = new Vue({
+
+                el: '#app',
+                data: {
+
+                    validated: true,
+                    password: '',
+                    passRepeat: '',
+                    inputType: 'password',
+                    isPasswordValid: false,
+                    filters: {
+
+                        isNumber: new RegExp(/[0-9]/),
+                        isSpace: new RegExp(/\s/),
+                        isUpper: new RegExp(/[A-Z]/),
+                        isSpecChar: new RegExp(/[!@#$%^&*()]/)
+
+                    },
+                    validators: {
+
+                        hasEight: false, // done
+                        hasMatch: false, // done
+                        hasUpper: false, // done
+                        hasNumber: false, // done
+                        hasNoSpace: false, // done
+                        hasSpecChar: false, // done
+
+                    }
+                },
+                methods: {
+
+                    keyPress() { // Make expressions a bit more readable
+                        let filter = this.filters,
+                            validate = this.validators,
+                            password = this.password,
+                            passwordRepeat = this.passwordRepeat;
+
+                        // Check if 8 or more characters
+                        validate.hasEight = (password.length >= 8) ? true : false;
+
+                        // Checks if passwords match
+                        validate.hasMatch = (this.passRepeat === password) ? true : false;
+
+                        // Check if has a NUMBER
+                        validate.hasNumber = (filter.isNumber.test(password)) ? true : false;
+
+                        // Check if has an UPPERCASE
+                        validate.hasUpper = (filter.isUpper.test(password)) ? true : false;
+
+                        // Check for spaces
+                        validate.hasNoSpace = (! filter.isSpace.test(password)) ? true : false;
+
+                        // Check for a SPECIAL CHARACTER
+                        validate.hasSpecChar = (filter.isSpecChar.test(password)) ? true : false;
+
+                        this.validate();
+                        this.handleSpecialCase();
+
+                    },
+                    isChecked() { // Make password fields visible
+                        this.inputType = (event.target.checked) ? 'text' : 'password';
+
+                    },
+                    validate() {
+
+                        let tempArr = [];
+
+                        // Create TEMPORARY ARRAY from the VALIDATORS OBJECT
+                        for (const validator in this.validators) {
+
+                            tempArr.push(this.validators[validator])
+
+                        }
+                        // Checks all validators.
+                        // If all TRUE register button is enabled
+                        this.isPasswordValid = tempArr.every((item) => {
+
+                            return item === true;
+
+                        })
+
+                    },
+                    /* Resets hasMatch & hasNoSpace validator if user 
+        backspaces password fields all the way back */
+                    handleSpecialCase() {
+
+                        let passLen = this.password.length;
+                        let passRptLen = this.passRepeat.length;
+
+                        if (passLen === 0 && passRptLen === 0) {
+
+                            this.validators.hasMatch = false;
+                            this.validators.hasNoSpace = false;
+
+                        }
+
+                    }
+
+                },
+                computed: {},
+                watch: {}
+
+
+            })
+        </script>
+
+    </body>
+
+</html>
