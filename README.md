@@ -4,9 +4,9 @@ A Vue.js password validator. Evaluates each character as it's typed into the pas
 
 The password must meet the follwing criteria.
 
-Must have at least 8 characters
-Must match
-Must have at one UPPERCASE
-Must have at least one number
-Must contain NO SPACES
-Must have at least one SPECIAL CHARACTER
+- Must have at least 8 characters
+- Must match
+- Must have at one UPPERCASE
+- Must have at least one number
+- Must contain NO SPACES
+- Must have at least one SPECIAL CHARACTER
